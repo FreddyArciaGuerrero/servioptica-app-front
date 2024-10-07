@@ -23,6 +23,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "start-branch": "node scripts/create-branch.js",
+    "end-branch": "node scripts/merge-delete-branch.js",
+    "update-branch": "node scripts/update-branch-from-dev.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
