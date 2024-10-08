@@ -2,11 +2,12 @@
 import React, { useContext } from "react";
 import { MessageContext } from "../../context/MessageContext";
 import ButtonAtom from "../atoms/button";
-import GridAtom from "../atoms/grid";
 import TitleAtom from "../atoms/title";
 import RowAtom from "../atoms/row";
 import ColumnAtom from "../atoms/column";
 import ContainerAtom from "../atoms/container";
+import { FormModule } from "../molecules/form";
+import testGroupData from '../molecules/form/data/testGroupData.json'
 
 const Home: React.FC = () => {
   const messageContext = useContext(MessageContext);
@@ -63,37 +64,43 @@ const Home: React.FC = () => {
     <ContainerAtom>
       <TitleAtom>Home Page</TitleAtom>
       <RowAtom gap={4} style={{ flexFlow: "wrap" }}>
-        <ColumnAtom flex={1} style={{minWidth: 200}}>
+        <ColumnAtom flex={1} style={{ minWidth: 200 }}>
           <ButtonAtom variant="contained" onClick={handleSendSnackMessage}>
-            Send Snack Message
+            Send Snack
           </ButtonAtom>
         </ColumnAtom>
-        <ColumnAtom flex={1} style={{minWidth: 200}}>
+        <ColumnAtom flex={1} style={{ minWidth: 200 }}>
           <ButtonAtom onClick={handleSendAlertMessage}>
-            Send Alert Message
+            Send Alert
           </ButtonAtom>
         </ColumnAtom>
-        <ColumnAtom flex={1} style={{minWidth: 200}}>
+        <ColumnAtom flex={1} style={{ minWidth: 200 }}>
           <ButtonAtom onClick={handleSendPopupMessage}>
-            Send Popup Message
+            Send Popup
           </ButtonAtom>
         </ColumnAtom>
-        <ColumnAtom flex={1} style={{minWidth: 200}}>
+        <ColumnAtom flex={1} style={{ minWidth: 200 }}>
           <ButtonAtom onClick={handleSendLightboxMessage}>
-            Send Lightbox Message
+            Send Lightbox
           </ButtonAtom>
         </ColumnAtom>
-        <ColumnAtom flex={1} style={{minWidth: 200}}>
+        <ColumnAtom flex={1} style={{ minWidth: 200 }}>
           <ButtonAtom onClick={handleSendBackdropMessage}>
-            Send Backdrop Message
+            Send Backdrop
           </ButtonAtom>
         </ColumnAtom>
-        <ColumnAtom flex={1} style={{minWidth: 200}}>
+        <ColumnAtom flex={1} style={{ minWidth: 200 }}>
           <ButtonAtom variant="outlined" onClick={handleSendDialogMessage}>
-            Send Dialog Message
+            Send Dialog
           </ButtonAtom>
         </ColumnAtom>
       </RowAtom>
+      <FormModule
+        onCallBack={(value) => console.log(value)}
+        onGoBackCallBack={() => {}}
+        actionBtnLabel="Continual"
+        groupsFields={testGroupData}
+      />
     </ContainerAtom>
   );
 };
