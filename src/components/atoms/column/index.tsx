@@ -1,6 +1,5 @@
 import Grid from "@mui/material/Grid2";
 import { ColumnAtomProps } from "./type";
-import useWindowSize from "@/hooks/useWindowSize";
 
 export const ColumnAtom = ({
   children,
@@ -14,28 +13,15 @@ export const ColumnAtom = ({
   pb,
   pl,
   pr,
-  p_lg,
-  p_md,
-  p_sm,
-  p_xs,
   gap,
   className,
   flex,
 }: Partial<ColumnAtomProps>) => {
-  const { width } = useWindowSize();
-
-  const determinePadding = () => {
-    if (width >= 1200 && p_lg) return p_lg;
-    if (width >= 992 && p_md) return p_md;
-    if (width >= 768 && p_sm) return p_sm;
-    if (width < 768 && p_xs) return p_xs;
-    return p;
-  };
   return (
     <Grid
       flex={flex ?? 1}
       gap={gap ?? 0}
-      p={determinePadding()}
+      p={p}
       pt={pt}
       pb={pb}
       pl={pl}

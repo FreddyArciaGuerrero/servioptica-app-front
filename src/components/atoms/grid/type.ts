@@ -27,10 +27,6 @@ export interface GridAtomProps {
   pb: number;
   pl: number;
   pr: number;
-  p_lg: number;
-  p_md: number;
-  p_sm: number;
-  p_xs: number;
   gap: number;
   className: string;
 };
