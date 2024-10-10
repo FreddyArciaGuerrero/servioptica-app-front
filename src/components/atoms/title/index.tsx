@@ -30,22 +30,34 @@ export const TitleAtom = ({
 }: Partial<TitleAtomProps>) => {
   if (startIcon || endIcon) {
     return (
-      <RowAtom gap={1} alignItems='center'>
+      <RowAtom gap={1} alignItems="center">
         {startIcon && (
-          <ColumnAtom style={{ flex: 'none', width: 'auto' }} className="TitleIcon">{startIcon}</ColumnAtom>
+          <ColumnAtom
+            style={{ flex: "none", width: "auto" }}
+            className="TitleIcon"
+          >
+            {startIcon}
+          </ColumnAtom>
         )}
-        <ColumnAtom style={{ flex: 'none', width: 'auto' }}>
+        <ColumnAtom style={{ flex: "none", width: "auto" }}>
           <TypeTitle
             className={`${className ?? ""} text-gray-100`}
             type={type ?? "h1"}
-            style={style!}
-            variant={variant!}
-            weight={weight!}
+            style={style}
+            variant={variant}
+            weight={weight}
           >
             {children}
           </TypeTitle>
         </ColumnAtom>
-        {endIcon && <ColumnAtom style={{ flex: 'none', width: 'auto' }} className="TitleIcon">{endIcon}</ColumnAtom>}
+        {endIcon && (
+          <ColumnAtom
+            style={{ flex: "none", width: "auto" }}
+            className="TitleIcon"
+          >
+            {endIcon}
+          </ColumnAtom>
+        )}
       </RowAtom>
     );
   }

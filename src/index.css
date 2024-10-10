@@ -1,6 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+}
+
+p.MuiFormHelperText-root.Mui-error {
+    font-size: 12px;
+    margin-left: 2px;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+}
+
+li.MuiButtonBase-root.MuiMenuItem-root {
+    font-size: 14px;
+}
 :root {
-  --mainBtnColor: #397189;
-  --hoverBtnColor: #2B5769;
+  --mainBtnColor: #024F8F;
+  --hoverBtnColor: #006ec9;
   --fieldColorText: #6A6C72;
   --baceSize: 8px; 
 }

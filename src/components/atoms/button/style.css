@@ -1,23 +1,20 @@
 .MuiButtonBase-root.generalBtn {
-  border-radius: 4px;
-  padding: 4px 16px;
+  border-radius: 0px;
+  padding: 16px 24px;
   box-shadow: none;
   text-transform: initial;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1;
   min-height: 36px;
   font-size: 16px;
-}
-
-.MuiButtonBase-root.generalBtn {
   background-color: var(--mainBtnColor);
   color: #ffffff;
   border: 1px solid var(--mainBtnColor);
 }
 
 .MuiButtonBase-root.generalBtn.outlined {
-  background-color: transparent;
-  color: var(--mainBtnColor);
+  background-color: #ffffff;
+  color: #424242;
 }
 .MuiButtonBase-root.generalBtn.outlined.focus {
   background-color: #f0fafe;
@@ -101,10 +98,6 @@
   color: #c7c7ca;
 }
 
-.generalBtn.linkStyle.Mui-disabled svg,
-.generalBtn.linkStyle.Mui-disabled svg * {
-  fill: #c7c7ca;
-}
 .MuiButtonBase-root.generalBtn.linkStyle.Mui-disabled {
   border: 0px
 }

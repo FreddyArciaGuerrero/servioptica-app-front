@@ -5,11 +5,13 @@ import './style.css'
 type ContainerAtomType = {
     children: React.ReactNode
     ref?: any
-    layoutType?: 1 | 2 | 3 | number
+
+  style?: React.CSSProperties;
+    layoutType?: 1 | 2 | 3
 }
-export const ContainerAtom = ({children, ref, layoutType}:ContainerAtomType) => {
+export const ContainerAtom = ({children, ref, layoutType, style}:ContainerAtomType) => {
     return (
-        <Container className={`containerAtom ${layoutType === 3 ? 'layoutTypeT3' : ''}`} ref={ref}>
+        <Container style={style} className={`containerAtom ${layoutType === 3 ? 'layoutTypeT3' : ''}`} ref={ref}>
             {children}
         </Container>
     )
