@@ -8,7 +8,7 @@ import BackgroundVideo from "../../../atoms/video";
 import GridAtom from "../../../atoms/grid";
 import TextAtom from "../../../atoms/text";
 import PersonIcon from "@mui/icons-material/Person";
-import './style.css'
+import "./style.css";
 // import { Link } from 'react-router-dom';
 
 const Header = () => {
@@ -18,7 +18,6 @@ const Header = () => {
         alignItems="center"
         justifyContent="center"
         style={{
-          overflow: "hidden",
           position: "absolute",
           top: 0,
           left: 0,
@@ -28,8 +27,17 @@ const Header = () => {
         }}
       >
         <BackgroundVideo poster={BkGeneral} videoUrl={bkGeneralVideo} />
+        <span
+          style={{
+            width: "100%",
+            height: 120,
+            background: "linear-gradient(0deg, #ffffff, #ffffff00)",
+            position: 'absolute',
+            bottom: 0
+          }}
+        />
       </GridAtom>
-      <ContainerAtom style={{ zIndex: 2 }}>
+      <ContainerAtom style={{ zIndex: 2, marginBottom: 10 }}>
         <RowAtom className="HeaderRow">
           <ColumnAtom flex={3} style={{ minWidth: 0 }}></ColumnAtom>
           <ColumnAtom

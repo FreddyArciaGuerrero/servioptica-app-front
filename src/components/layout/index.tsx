@@ -73,7 +73,16 @@ const Layout: React.FC = () => {
   return (
     <div>
       <Header />
-      <main>
+      <main style={{position: 'relative'}}>
+      <span
+          style={{
+            width: "100%",
+            height: 120,
+            background: "linear-gradient(180deg, #ffffff, #ffffff00)",
+            position: 'absolute',
+            top: 0
+          }}
+        />
         <div>
           {messageContext?.messages.map((message, index) =>
             renderMessage(message, index)
