@@ -72,7 +72,7 @@ const Layout: React.FC = () => {
 
   return (
     <div>
-      <Header />
+      <Header variant="main" />
       <main style={{position: 'relative'}}>
       <span
           style={{
