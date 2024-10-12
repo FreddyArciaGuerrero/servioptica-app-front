@@ -7,88 +7,58 @@ import {
   GridAtom,
   RowAtom,
   SpaceAtom,
-  TextAtom,
-  TitleAtom,
 } from "../atoms";
 import DataTable from "../atoms/table";
-import { BASE_COLORS } from "../../style/constants";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import testImg from "../../assets/img/testBannerImg.webp";
-import "swiper/css";
+import { SliderDash } from "../organisms/sliderDash";
+
 const Dashboard: React.FC = () => {
   // const location = useLocation();
   // const searchParams = new URLSearchParams(location.search);
   // const id = searchParams.get("id"); // Obtener el parámetro "id" si está presente
-
   return (
-    <ContainerAtom style={{alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column'}}>
+    <ContainerAtom
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <SpaceAtom v={40} />
-      <RowAtom gap={5} style={{ minHeight: 400, flexFlow: 'wrap', maxWidth: 1440 }} p={3}>
-        <ColumnAtom flex={7} style={{minWidth: 300}}>
+      <RowAtom
+        gap={10}
+        style={{
+          minHeight: 400,
+          flexFlow: "wrap",
+          maxWidth: 1440,
+          width: "100%",
+        }}
+        p={3}
+      >
+        <ColumnAtom flex={7} style={{ minWidth: 300 }}>
           <GridAtom style={{ width: "100%" }}>
             <DataTable />
           </GridAtom>
         </ColumnAtom>
-        <ColumnAtom flex={5} style={{minWidth: 300}}>
-          <GridAtom style={{ width: "100%" }}>
-            <TextAtom type="small">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel
-              eleifend erat, eu posuere magna. Morbi justo urna, dignissim sit
-              amet suscipit a, euismod sed orci. Phasellus dapibus erat vel ex
-              ultrices tempus. Donec pretium, dolor id pellentesque luctus,
-              massa elit mollis dolor, vitae consequat ipsum mauris vitae sem.
-              In posuere, tortor quis placerat malesuada, odio justo tristique
-              justo, ac placerat turpis ex id urna. Duis consequat pulvinar sem
-              vitae pretium. Quisque molestie varius mi a imperdiet. Vestibulum
-              eget sollicitudin massa. Curabitur condimentum sem quis massa
-              ultricies vulputate. Donec porttitor gravida commodo. Donec et sem
-              lacus. Integer maximus ut lacus sed dignissim. Duis aliquet
-              pharetra augue, et varius nisi iaculis ut. Pellentesque habitant
-              morbi tristique senectus et netus et malesuada fames ac turpis
-              egestas. Fusce sed tellus orci. Curabitur risus orci, feugiat ac
-              odio ac, lobortis vehicula nulla.
-            </TextAtom>
-          </GridAtom>
-          <SpaceAtom v={40} />
-          <GridAtom style={{ width: "100%" }}>
-            <TitleAtom type="h3" style={{ color: BASE_COLORS.blue }}>
-              Promociones
-            </TitleAtom>
-          </GridAtom>
-          <SpaceAtom v={40} />
-          <GridAtom style={{ width: "100%"}}>
-            <Swiper
-            style={{width: '100%'}}
-              modules={[Navigation, Pagination, Scrollbar, A11y]}
-              spaceBetween={50}
-              slidesPerView={1}
-              navigation
-              pagination
-              scrollbar={{ draggable: true }}
-              onSwiper={(swiper: any) => console.log(swiper)}
-              onSlideChange={() => console.log("slide change")}
-            >
-              <SwiperSlide>
-                <GridAtom alignItems="center" justifyContent="center" style={{width: '100%'}}>
-                  <img
-                    src={testImg}
-                    alt="Test Img"
-                    style={{ objectFit: "contain", width: '100%' }}
-                  />
-                </GridAtom>
-              </SwiperSlide>
-              <SwiperSlide>
-                <GridAtom alignItems="center" justifyContent="center" style={{width: '100%'}}>
-                  <img
-                    src={testImg}
-                    alt="Test Img"
-                    style={{ objectFit: "contain", width: '100%' }}
-                  />
-                </GridAtom>
-              </SwiperSlide>
-            </Swiper>
-          </GridAtom>
+        <ColumnAtom flex={5} style={{ minWidth: 300 }}>
+          <SliderDash
+            data={[
+              {
+                img: testImg,
+                title: "Promociones",
+                description:
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer scelerisque condimentum lacus eu dapibus. Aliquam eros augue, sagittis at quam quis, porta rhoncus lorem. Vivamus accumsan varius eros, vel varius nisi mollis in. Sed neque tellus, commodo in leo ultricies, egestas finibus diam. Quisque sed aliquam dui, in gravida diam. Nullam volutpat mi interdum, elementum lectus et, cursus magna. In aliquet in ligula sit amet facilisis. Nam iaculis aliquet velit vitae sagittis. Fusce mollis, nunc et congue placerat, lectus turpis mattis ipsum, id laoreet diam tellus sit amet quam. Nulla eu ligula nisl. Proin egestas dictum eros, et efficitur mauris consequat nec. Praesent efficitur neque urna, mattis malesuada tellus venenatis et. Proin pretium est lacus, finibus mattis augue posuere a. In ante nunc, tempus et justo eu, vulputate lacinia dolor. Nulla facilisi.",
+              },
+              { img: testImg, title: "Promociones", description: "hola mundo" },
+              {
+                img: testImg,
+                title: "Promociones",
+                description:
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer scelerisque condimentum lacus eu dapibus. Aliquam eros augue, sagittis at quam quis, porta rhoncus lorem. Vivamus accumsan varius eros, vel varius nisi mollis in. Sed neque tellus, commodo in leo ultricies, egestas finibus diam. Quisque sed aliquam dui, in gravida diam. Nullam volutpat mi interdum, elementum lectus et, cursus magna. In aliquet in ligula sit amet facilisis. Nam iaculis aliquet velit vitae sagittis. Fusce mollis, nunc et congue placerat, lectus turpis mattis ipsum, id laoreet diam tellus sit amet quam. Nulla eu ligula nisl. Proin egestas dictum eros, et efficitur mauris consequat nec. Praesent efficitur neque urna, mattis malesuada tellus venenatis et. Proin pretium est lacus, finibus mattis augue posuere a. In ante nunc, tempus et justo eu, vulputate lacinia dolor. Nulla facilisi.",
+              },
+            ]}
+          />
         </ColumnAtom>
       </RowAtom>
     </ContainerAtom>
