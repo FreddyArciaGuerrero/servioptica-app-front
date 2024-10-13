@@ -18,7 +18,7 @@ const LoginOpt: React.FC = () => {
         position: "relative",
         overflow: "hidden",
         minHeight: 500,
-        height: "calc(100vh - 347px)",
+        height: "calc(100vh - 260px)",
       }}
     >
       <LoginOptForm

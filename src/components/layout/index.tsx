@@ -24,9 +24,9 @@ const Layout: React.FC = () => {
       case currentLink.isHomePage:
         return "main";
       case currentLink.isLoginPage:
-        return "main";
+        return "login";
       case currentLink.isLoginOptPage:
-        return "main";
+        return "login";
       case currentLink.isDashboard:
         return "dash";
       case currentLink.isDashboardOpt:

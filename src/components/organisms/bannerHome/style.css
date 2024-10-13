@@ -1,6 +1,6 @@
 .BigCtaHome {
   text-decoration: none;
-  height: calc(100vh - 254px);
+  height: calc(100vh - 258px);
   min-height: 500px;
   width: 100%;
   justify-content: center;
@@ -21,14 +21,7 @@
 }
 
 .BigCtaHome:hover .MuiButtonBase-root.generalBtn {
-    border-radius: 0px;
-    padding: 16px 24px;
     box-shadow: none;
-    text-transform: initial;
-    font-weight: 400;
-    line-height: 1;
-    min-height: 36px;
-    font-size: 16px;
     background-color: var(--mainBtnColor);
     color: #ffffff;
     border: 1px solid var(--mainBtnColor);
