@@ -69,7 +69,7 @@ export const BannerHome = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Link to={"/login-opt"} className="BigCtaHome">
+        <Link to={"/search-order-tracking"} className="BigCtaHome">
           <GridAtom
             style={{ position: "absolute", width: "100%", height: "100%" }}
           >

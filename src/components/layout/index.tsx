@@ -1,5 +1,5 @@
 // src/components/Layout.tsx
-import React, { useMemo } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -19,13 +19,30 @@ const Layout: React.FC = () => {
     currentLink,
   } = useLayout();
 
-  const { isDashboard, isOrderTracking } = currentLink;
-
-  const isDashHeader = useMemo(()=>(isDashboard || isOrderTracking), [isDashboard, isOrderTracking])
+  function getPageType(currentLink:any) {
+    switch (true) {
+      case currentLink.isHomePage:
+        return "main";
+      case currentLink.isLoginPage:
+        return "main";
+      case currentLink.isLoginOptPage:
+        return "main";
+      case currentLink.isDashboard:
+        return "dash";
+      case currentLink.isDashboardOpt:
+        return "dash";
+      case currentLink.isOrderTracking:
+        return "dash";
+      case currentLink.isSearchOrderTracking:
+        return "search";
+      default:
+        return "main";
+    }
+  }
 
   return (
     <div>
-      <Header variant={isDashHeader ? "dash" : "main"} />
+      <Header variant={getPageType(currentLink)} />
       <main style={{ position: "relative" }}>
         <div>
           {messageContext?.messages.map((message, index) =>

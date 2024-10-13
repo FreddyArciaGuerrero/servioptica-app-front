@@ -45,7 +45,7 @@ const Login: React.FC = () => {
         position: "relative",
         overflow: "hidden",
         minHeight: 500,
-        height: "calc(100vh - 347px)",
+        height: "calc(100vh - 260px)",
       }}
     >
       <GridAtom
@@ -54,8 +54,8 @@ const Login: React.FC = () => {
         style={{
           position: "absolute",
           top: 0,
-          left: "-5%",
-          width: "105%",
+          left: "0",
+          width: "100%",
           height: "100%",
           zIndex: -1,
         }}
@@ -67,8 +67,8 @@ const Login: React.FC = () => {
           height={1080}
           style={{
             objectFit: "cover",
-            objectPosition: "center bottom",
-            width: "100%",
+            objectPosition: "center top",
+            width: "103%",
             height: "100%",
             position: "absolute",
             bottom: 0,

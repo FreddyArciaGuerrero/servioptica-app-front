@@ -20,12 +20,15 @@ export const useLayout = () => {
     isLoginOptPage: location.pathname === "/login-opt",
     isDashboard: location.pathname.startsWith("/dashboard"),
     isDashboardOpt: location.pathname.startsWith("/dashboard-opt"),
-    isOrderTracking: location.pathname.startsWith("/order-tracking")
+    isOrderTracking: location.pathname.startsWith("/order-tracking"),
+    isSearchOrderTracking: location.pathname.startsWith(
+      "/search-order-tracking"
+    ),
   };
 
-useEffect(()=>{
-  console.log(currentLink)
-}, [currentLink])
+  useEffect(() => {
+    console.log(currentLink);
+  }, [currentLink]);
 
   useEffect(() => {
     const lastMessage =
