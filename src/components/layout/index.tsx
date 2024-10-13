@@ -19,10 +19,12 @@ const Layout: React.FC = () => {
     currentLink,
   } = useLayout();
 
-  function getPageType(currentLink:any) {
+  function getPageType(currentLink: any) {
     switch (true) {
       case currentLink.isHomePage:
         return "main";
+      case currentLink.isHomeAdminPage:
+        return "main-admin";
       case currentLink.isLoginPage:
         return "login";
       case currentLink.isLoginOptPage:
@@ -30,7 +32,7 @@ const Layout: React.FC = () => {
       case currentLink.isDashboard:
         return "dash";
       case currentLink.isDashboardOpt:
-        return "dash";
+        return "dash-admin";
       case currentLink.isOrderTracking:
         return "dash";
       case currentLink.isSearchOrderTracking:

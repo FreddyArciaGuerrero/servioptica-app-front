@@ -32,7 +32,7 @@ const LoginOpt: React.FC = () => {
           onCallBack={(value) => {
             console.log("onCallBack", value);
             if (value.length > 0) {
-              navetgate('/dashboard-opt?id=987')
+              navetgate('/home-admin')
               setStep(1);
             }
           }}

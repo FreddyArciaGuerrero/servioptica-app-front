@@ -15,15 +15,14 @@ export const useLayout = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const currentLink = {
-    isHomePage: location.pathname === "/isHomePage",
+    isHomePage: location.pathname === "/",
+    isHomeAdminPage: location.pathname === "/home-admin",
     isLoginPage: location.pathname === "/login",
     isLoginOptPage: location.pathname === "/login-opt",
-    isDashboard: location.pathname.startsWith("/dashboard"),
-    isDashboardOpt: location.pathname.startsWith("/dashboard-opt"),
-    isOrderTracking: location.pathname.startsWith("/order-tracking"),
-    isSearchOrderTracking: location.pathname.startsWith(
-      "/search-order-tracking"
-    ),
+    isDashboard: location.pathname === "/dashboard",
+    isDashboardOpt: location.pathname === "/dashboard-opt",
+    isOrderTracking: location.pathname === "/order-tracking",
+    isSearchOrderTracking: location.pathname === "/search-order-tracking",
   };
 
   useEffect(() => {

@@ -3,13 +3,23 @@ import { MainHeader } from "./main";
 import { DashHeader } from "./dash";
 import { SearchHeader } from "./search";
 import { LoginHeader } from "./login";
+import { MainAdminHeader } from "./mainAdmin";
+import { DashHeaderAdmin } from "./dashAdmin";
 // import { Link } from 'react-router-dom';
 
 const Header = ({
   variant,
   img,
 }: {
-  variant: "main" | "dash" | "faq" | "search" | "login";
+  variant:
+    | "main"
+    | "dash"
+    | "faq"
+    | "search"
+    | "login"
+    | "main-admin"
+    | "dash-admin";
+
   img?: string;
 }) => {
   switch (variant) {
@@ -21,6 +31,12 @@ const Header = ({
     }
     case "dash": {
       return <DashHeader />;
+    }
+    case "dash-admin": {
+      return <DashHeaderAdmin />;
+    }
+    case "main-admin": {
+      return <MainAdminHeader />;
     }
     default: {
       return <MainHeader />;
