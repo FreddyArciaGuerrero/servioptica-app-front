@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ButtonAtom,
   ColumnAtom,
@@ -17,6 +17,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import { BASE_COLORS } from "../../../style/constants";
 
 export const DashHeader = () => {
+  const navetgate = useNavigate()
+  
   return (
     <header style={{ position: "relative", display: "flex"}}>
       <GridAtom
@@ -122,6 +124,7 @@ export const DashHeader = () => {
             <ColumnAtom style={{flex: 'none'}}>
               <ButtonAtom
                 onClick={() => {
+                  navetgate('/order-tracking')
                   console.log("Buscar");
                 }}
                 style={{ minWidth: 173 }}

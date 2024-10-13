@@ -1,5 +1,5 @@
 // src/components/Layout.tsx
-import React from "react";
+import React, { useMemo } from "react";
 import { Outlet } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -19,11 +19,13 @@ const Layout: React.FC = () => {
     currentLink,
   } = useLayout();
 
-  const { isDashboard } = currentLink;
+  const { isDashboard, isOrderTracking } = currentLink;
+
+  const isDashHeader = useMemo(()=>(isDashboard || isOrderTracking), [isDashboard, isOrderTracking])
 
   return (
     <div>
-      <Header variant={isDashboard ? "dash" : "main"} />
+      <Header variant={isDashHeader ? "dash" : "main"} />
       <main style={{ position: "relative" }}>
         <div>
           {messageContext?.messages.map((message, index) =>
