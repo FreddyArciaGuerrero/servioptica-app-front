@@ -10,6 +10,7 @@ import OrderTracking from "../components/pages/OrderTracking";
 import SearchOrderTracking from "../components/pages/SearchOrderTracking";
 import HomeAdmin from "../components/pages/HomeAdmin";
 import DashboardPromo from "../components/pages/DashboardPromo";
+import { Faq } from "../components/pages/faq";
 
 const AppRouter: React.FC = () => {
   return (
@@ -25,6 +26,7 @@ const AppRouter: React.FC = () => {
           <Route path="/dashboard-opt" element={<DashboardOpt />} />
           <Route path="/order-tracking" element={<OrderTracking />} />
           <Route path="/search-order-tracking" element={<SearchOrderTracking />} />
+          <Route path="/faq" element={<Faq />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
