@@ -8,7 +8,7 @@ type AccordionAtomType = {
   initialExpanded: boolean;
   expandIcon: React.ReactNode;
   style?: React.CSSProperties;
-  onCallBack: ()=> void
+  onCallBack: () => void;
 };
 
 export const AccordionAtom = ({
@@ -16,7 +16,7 @@ export const AccordionAtom = ({
   initialExpanded,
   expandIcon,
   style,
-  onCallBack
+  onCallBack,
 }: AccordionAtomType) => {
   const [expanded, setExpanded] = useState(initialExpanded);
 
@@ -25,7 +25,8 @@ export const AccordionAtom = ({
   }, [initialExpanded]);
 
   const renderItemsAccordion = () => {
-    return  <Accordion
+    return (
+      <Accordion
         style={style}
         key={data.id}
         className="accordionAtom"
@@ -41,7 +42,7 @@ export const AccordionAtom = ({
         </AccordionSummary>
         <AccordionDetails>{data.content}</AccordionDetails>
       </Accordion>
-    
+    );
   };
 
   return <>{renderItemsAccordion()}</>;
