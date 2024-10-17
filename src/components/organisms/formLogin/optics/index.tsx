@@ -4,15 +4,17 @@ import TextAtom from "../../../atoms/text";
 import { FormModule } from "../../../molecules/form";
 import BkLogin from "../../../../assets/img/bkLogin.webp";
 import { BASE_COLORS } from "../../../../style/constants";
-
 import fieldBuiltDataOpt from "../../../organisms/formLogin/data/fieldBuiltDataOpt.json";
+import { PreDataType } from "../../../molecules/form/type";
 
 export const LoginOptForm = ({
   setStep,
-  setFormData
+  setFormData,
+  onCallBack
 }: {
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  setFormData: React.Dispatch<React.SetStateAction<any>>
+  setFormData: React.Dispatch<React.SetStateAction<any>>;
+  onCallBack: (value: PreDataType) => void
 }) => {
   return (
     <>
@@ -62,6 +64,7 @@ export const LoginOptForm = ({
               onCallBack={(value) => {
                 setStep(3);
                 setFormData(value)
+                onCallBack(value)
               }}
             />
         </GridAtom>
