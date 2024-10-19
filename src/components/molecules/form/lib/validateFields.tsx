@@ -54,14 +54,14 @@ export const validateField = async ({
           return {
             groupId: groupId!,
             fieldId: field.id!,
-            errorMessage: "",
+            errorMessage: field.textError ?? `Mínimo ${minlength} caracteres.`,
           };
         }
         if (String(value).length! > maxlength) {
           return {
             groupId: groupId!,
             fieldId: field.id!,
-            errorMessage: field.textError ?? `Minimo ${minlength} caracteres.`,
+            errorMessage: field.textError ?? `Máximo ${minlength} caracteres.`,
           };
         }
         return null;
@@ -113,6 +113,13 @@ export const validateField = async ({
         return null;
 //TODO: Refactoring to prod
       case "password":
+        if (String(value).length! < minlength) {
+          return {
+            groupId: groupId!,
+            fieldId: field.id!,
+            errorMessage: field.textError ?? `Mínimo ${minlength} caracteres.`,
+          };
+        }
         const passwordRegex =
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
         // if (!passwordRegex.test(String(value))) {

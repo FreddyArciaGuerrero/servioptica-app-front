@@ -4,13 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Dashboard, Home, Login } from "../components/pages";
 import Layout from "../components/layout";
 import NotFound from "../components/pages/NotFound";
-import LoginOpt from "../components/pages/LoginOpt";
 import DashboardOpt from "../components/pages/DashboardOpt";
 import OrderTracking from "../components/pages/OrderTracking";
 import SearchOrderTracking from "../components/pages/SearchOrderTracking";
 import HomeAdmin from "../components/pages/HomeAdmin";
 import DashboardPromo from "../components/pages/DashboardPromo";
 import { Faq } from "../components/pages/faq";
+import PreLogin from "../components/pages/PreLogin";
 
 const AppRouter: React.FC = () => {
   return (
@@ -19,8 +19,8 @@ const AppRouter: React.FC = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/home-admin" element={<HomeAdmin />} />
+          <Route path="/pre-login" element={<PreLogin />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/login-opt" element={<LoginOpt />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard-promo" element={<DashboardPromo />} />
           <Route path="/dashboard-opt" element={<DashboardOpt />} />
