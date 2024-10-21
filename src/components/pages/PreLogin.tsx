@@ -68,6 +68,7 @@ const PreLogin: React.FC = () => {
   };
 
   const handkeVerifyOtp = (value: string) => {
+    console.log('[handkeVerifyOtp]', value)
     verifyOtp({ otp: value, email: email }).then((response) => {
       if (response.error) {
         errorSnackMessage(response.message);
@@ -82,7 +83,7 @@ const PreLogin: React.FC = () => {
   const handleCheckClient = (value: { document: string }) => {
     checkClient({ document: value.document })
       .then((response) => {
-        console.log("[checkClient]", response);
+        console.log("[checkClient]", response.code);
         if (response.error) {
           errorSnackMessage(response.message);
         }
