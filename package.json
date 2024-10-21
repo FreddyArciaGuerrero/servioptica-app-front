@@ -29,6 +29,7 @@
     "x-data-grid": "^2.1.0"
   },
   "scripts": {
+    "update-master": "node src/scripts/update-master-from-dev.js",
     "start-branch": "node src/scripts/create-branch.js",
     "end-branch": "node src/scripts/merge-delete-branch.js",
     "update-branch": "node src/scripts/update-branch-from-dev.js",
