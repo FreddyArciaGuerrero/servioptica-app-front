@@ -46,7 +46,7 @@ export const FiltersTable = ({
             { option: "En proceso", value: "En proceso" },
             { option: "Finalizado", value: "Finalizado" },
           ]}
-          placeholder={"Estado"}
+          placeholder={"Todos los estados"}
           defaultValue={stateFilter}
           onChangeCallback={(value) => setStateFilter(value)}
         />
@@ -63,7 +63,6 @@ export const FiltersTable = ({
           }}
           onChangeCallback={(value) => {
             setDateFilter(String(value));
-            console.log(value);
           }}
         />
       </ColumnAtom>

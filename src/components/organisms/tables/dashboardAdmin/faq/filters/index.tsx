@@ -1,4 +1,3 @@
-
 import {
   ButtonAtom,
   ColumnAtom,
@@ -10,15 +9,13 @@ import { TableFaqAdminView } from "..";
 interface FiltersTableProps {
   stateFilter: string;
   setStateFilter: React.Dispatch<React.SetStateAction<string>>;
-  setView: React.Dispatch<React.SetStateAction<TableFaqAdminView>>
+  setView: React.Dispatch<React.SetStateAction<TableFaqAdminView>>;
 }
 export const FiltersTable = ({
   stateFilter,
   setStateFilter,
-  setView
+  setView,
 }: FiltersTableProps) => {
-
-
   return (
     <RowAtom
       style={{ width: "100%", flexFlow: "wrap" }}
@@ -31,10 +28,10 @@ export const FiltersTable = ({
           name="state"
           variant="small"
           options={[
-            { option: "En proceso", value: "En proceso" },
-            { option: "Finalizado", value: "Finalizado" },
+            { option: "Inactive", value: "Inactive" },
+            { option: "Active", value: "Active" },
           ]}
-          placeholder={"Estado"}
+          placeholder={"Todos los estados"}
           defaultValue={stateFilter}
           onChangeCallback={(value) => setStateFilter(value)}
         />
@@ -46,7 +43,9 @@ export const FiltersTable = ({
             minWidth: "initial",
             width: "100%",
           }}
-          onClick={() => {setView('form')}}
+          onClick={() => {
+            setView("form");
+          }}
         >
           Crear Nuevo
         </ButtonAtom>

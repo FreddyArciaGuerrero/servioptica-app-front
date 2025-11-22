@@ -15,17 +15,36 @@ import { appStoreAtom } from "../../store/Auth";
 import { Navigate } from "react-router-dom";
 import { TablePromotions } from "../organisms/tables/dashboardAdmin/promotions";
 import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
-import InsertCommentIcon from '@mui/icons-material/InsertComment';
-import PersonIcon from '@mui/icons-material/Person';
-import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import InsertCommentIcon from "@mui/icons-material/InsertComment";
+import PersonIcon from "@mui/icons-material/Person";
+import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import { hideSearchAtom } from "../../store/searchOrder/hideSearchAtom";
 
 type Views = "main" | "faq" | "user" | "promotions";
 const DashboardAdmin: React.FC = () => {
+  const [, setHideSearch] = useAtom(hideSearchAtom);
+
   const menu: Array<{ label: string; action: Views; icon: JSX.Element }> = [
-    { label: "Administración de Pedidos", action: "main", icon: <Inventory2RoundedIcon /> },
-    { label: "Editar Preguntas Frecuentes", action: "faq", icon: <InsertCommentIcon /> },
-    { label: "Administración de Usuarios", action: "user", icon: <PersonIcon /> },
-    { label: "Editar Promociones", action: "promotions", icon: <BookmarksIcon /> },
+    {
+      label: "Administración de Pedidos",
+      action: "main",
+      icon: <Inventory2RoundedIcon />,
+    },
+    {
+      label: "Editar Preguntas Frecuentes",
+      action: "faq",
+      icon: <InsertCommentIcon />,
+    },
+    {
+      label: "Administración de Usuarios",
+      action: "user",
+      icon: <PersonIcon />,
+    },
+    {
+      label: "Editar Promociones",
+      action: "promotions",
+      icon: <BookmarksIcon />,
+    },
   ];
   const [view, setView] = useState<Views>("main");
   const [appStore] = useAtom(appStoreAtom);
@@ -49,7 +68,7 @@ const DashboardAdmin: React.FC = () => {
     >
       <SpaceAtom v={40} />
       <RowAtom
-        gap={10}
+        gap={4}
         style={{
           minHeight: 400,
           flexFlow: "wrap",
@@ -67,14 +86,21 @@ const DashboardAdmin: React.FC = () => {
         <ColumnAtom flex={4} style={{ minWidth: 300 }} gap={2}>
           {menu.map((item, index) => (
             <ButtonAtom
-            key={index + 1}
+              key={index + 1}
               startIcon={item.icon}
               variant={item.action === view ? "contained" : "outlined"}
-              onClick={() => setView(item.action)}
+              onClick={() => {
+                const isMain = item.action !== "main";
+                setHideSearch(isMain);
+                setTimeout(() => {
+                  setView(item.action);
+                }, 100);
+              }}
               style={{
                 width: "100%",
                 fontWeight: 900,
-                fontSize: 18,
+                fontSize: 16,
+                padding: "12px 16px",
                 textAlign: "left",
                 justifyContent: "flex-start",
               }}

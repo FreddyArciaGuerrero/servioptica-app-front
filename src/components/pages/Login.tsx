@@ -3,16 +3,10 @@ import React, { useState } from "react";
 import ContainerAtom from "../atoms/container";
 import { LoginForm } from "../organisms/formLogin/main";
 import { Navigate, useNavigate } from "react-router-dom";
-import {
-  assignPasswordByEmail,
-  loginUser,
-  sendOtp,
-  verifyOtp,
-} from "../../api/Auth";
+import { assignPassword, loginUser, sendOtp, verifyOtp } from "../../api/Auth";
 import { persistAppStoreAtom } from "../../store/Auth";
 import { useAtom } from "jotai";
 import { useMessage } from "../../hooks/useMessage";
-
 
 const Login: React.FC = () => {
   const [appStore, setAppStore] = useAtom(persistAppStoreAtom);
@@ -32,12 +26,15 @@ const Login: React.FC = () => {
             errorSnackMessage(response.message);
           }
           if (response.data?.access_token) {
+            const authData = {
+              access_token: response.data.access_token,
+              rol: response.data.admin ? "admin" : "user",
+              admin: response.data.admin,
+              document: value.document,
+            };
+            // console.log("[handleLogin] [authData]", authData);
             setAppStore({
-              auth: {
-                access_token: response.data.access_token,
-                rol: "admin",
-                admin: response.data.admin,
-              },
+              auth: authData,
               user: null,
             });
             successSnackMessage(String(response.message));
@@ -52,7 +49,7 @@ const Login: React.FC = () => {
     }
     if (value && step === 2) {
       // value: {email}
-      sendOtp({ email: value.email }).then((response) => {
+      sendOtp({ document: value.document }).then((response) => {
         if (response.error) {
           errorSnackMessage(response.message);
         }
@@ -63,29 +60,30 @@ const Login: React.FC = () => {
       });
     }
     if (value && step === 3) {
-      // value: {email & otp}
-      verifyOtp({ otp: value.otp, email: value.email }).then((response) => {
-        if (response.error) {
-          errorSnackMessage(response.message);
+      // value: {document & otp}
+      verifyOtp({ otp: value.otp, document: value.document }).then(
+        (response) => {
+          if (response.error) {
+            errorSnackMessage(response.message);
+          }
+          if (!response.error && response.data) {
+            setTokenPass(response.data.assignToken);
+            successSnackMessage(String(response.message));
+            setStep(4);
+          }
         }
-        console.log(response);
-        if (!response.error && response.data) {
-          setTokenPass(response.data.assignToken);
-          successSnackMessage(String(response.message));
-          setStep(4);
-        }
-      });
+      );
     }
     if (value && step === 4) {
-      // New Passbord | value: {password_1, password_2, email}
+      // New Passbord | value: {password_1, password_2, document}
       if (value.password_1 !== value.password_2) {
         errorSnackMessage("!Las claves no coinciden!");
       } else {
-        assignPasswordByEmail({
+        assignPassword({
           assignToken: tokenPass,
-          email: value.email,
+          document: value.document,
           password: value.password_1,
-        }).then((response) => {
+        }).then((response: any) => {
           if (response.error) {
             errorSnackMessage(response.message);
           }

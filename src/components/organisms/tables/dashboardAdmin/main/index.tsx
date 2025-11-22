@@ -6,31 +6,48 @@ import { FiltersTable } from "./filters";
 import { DataGrid } from "@mui/x-data-grid";
 import { localeText } from "../../../../atoms/table/libs";
 import columns from "./libs/columns";
-import { useState } from "react";
+import { useTableOrdersAdmin } from "./hooks/useTableOrdersAdmin";
+import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
-const rows = [
-  {
-    id: 1,
-    order: 1013138654,
-    site: "Óptica Txt 01",
-    lot: "10135-79840",
-    state: "En proceso",
-    date: "2024-09-01",
-  },
-];
+export interface RowTableData {
+  id: number;
+  order: number;
+  site: string;
+  lot: string;
+  state: string;
+  date: string;
+}
+
 const paginationModel = { page: 0, pageSize: 10 };
 
 export const TableMainAdmin = () => {
-  const [siteFilter, setSiteFilter] = useState("");
-  const [stateFilter, setStateFilter] = useState("");
-  const [dateFilter, setDateFilter] = useState("");
+  const navetgate = useNavigate();
+  const {
+    loading,
+    handleDownload,
+    setStateFilter,
+    stateFilter,
+    setDateFilter,
+    dateFilter,
+    filteredRows,
+  } = useTableOrdersAdmin();
 
-  const filteredRows = rows.filter((row) => {
-    const matchesSite = siteFilter ? row.site.includes(siteFilter) : true;
-    const matchesState = stateFilter ? row.state.includes(stateFilter) : true;
-    const matchesDate = dateFilter ? row.date === dateFilter : true;
-    return matchesSite && matchesState && matchesDate;
-  });
+  if (loading) {
+    return (
+      <GridAtom
+        style={{ minHeight: 320, width: "100%" }}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <CircularProgress />
+      </GridAtom>
+    );
+  }
+
+  if (!filteredRows) {
+    return <></>;
+  }
 
   return (
     <GridAtom style={{ width: "100%" }}>
@@ -67,25 +84,27 @@ export const TableMainAdmin = () => {
           </ColumnAtom>
           <ColumnAtom flex={12}>
             <FiltersTable
-              siteFilter={siteFilter}
-              setSiteFilter={setSiteFilter}
               stateFilter={stateFilter}
               setStateFilter={setStateFilter}
               dateFilter={dateFilter}
               setDateFilter={setDateFilter}
+              onDownloadAction={() => handleDownload()}
             />
           </ColumnAtom>
         </RowAtom>
         <DataGrid
           localeText={localeText}
           style={{ width: "100%" }}
-          rows={filteredRows}
+          rows={filteredRows ?? undefined}
           columns={columns}
+          columnVisibilityModel={{ id: false }}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[10, 20, 50, 100]}
           checkboxSelection={false}
           rowSelection={false}
-          onRowClick={(params) => console.log(params)}
+          onRowClick={(params) => {
+            navetgate(`/order-tracking/${params.row.document_no}`);
+          }} // Verificar que el id_pedido es el correcto
           getRowClassName={(params) =>
             params.indexRelativeToCurrentPage % 2 === 0 ? "alternate-row" : ""
           }

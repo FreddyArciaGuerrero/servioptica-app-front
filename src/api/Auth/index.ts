@@ -7,11 +7,13 @@ import {
   RegisterResponse,
 } from "./type";
 
-const devUrl = "https://tracking-servioptica-api.txt.co";
+//const devUrl = "https://apitrazabilidadco.essilorluxottica.com";
+const devUrl = process.env.REACT_APP_BASE_URL;
 
 export async function loginUser(data: LoginRequest): Promise<LoginResponse> {
+  // console.log('[process.env.REACT_APP_BASE_URL]', process.env.REACT_APP_BASE_URL)
   const url = `${devUrl}/api/auth/login`;
-  console.log("[loginUser] [PREV˝]", data, url);
+  // console.log("[loginUser] [PREV˝]", data, url);
 
   try {
     const response = await fetch(url, {
@@ -23,15 +25,12 @@ export async function loginUser(data: LoginRequest): Promise<LoginResponse> {
       body: JSON.stringify(data),
     });
 
-    // if (!response.ok) {
-    //   throw new Error(`Error ${response.status}: ${response.statusText}`);
-    // }
-
     const responseData: LoginResponse = await response.json();
-    console.log("[loginUser] [responseData]", responseData);
+    // console.log("[loginUser] [responseData]", responseData);
 
     return responseData;
   } catch (error: any) {
+    console.error("[loginUser] [error]", error);
     return error as LoginResponse;
   }
 }
@@ -40,7 +39,7 @@ export async function checkClient(
   data: CheckClientRequest
 ): Promise<CheckClientResponse> {
   const url = `${devUrl}/api/checkClient`;
-  console.log("[checkClient] [PREV˝]", data, url);
+  // console.log("[checkClient] [PREV˝]", data, url);
 
   try {
     const response = await fetch(url, {
@@ -52,10 +51,9 @@ export async function checkClient(
       body: JSON.stringify(data),
       redirect: "manual",
     });
-    
-    
+
     const responseData: CheckClientResponse = await response.json();
-    console.log("[checkClient] [responseData]", responseData);
+    // console.log("[checkClient] [responseData]", responseData);
 
     return { ...responseData, code: response.status };
   } catch (error: any) {
@@ -67,7 +65,7 @@ export async function register(
   data: RegisterRequest
 ): Promise<RegisterResponse> {
   const url = `${devUrl}/api/auth/register`;
-  console.log("[register] [PREV]", data, url);
+  // console.log("[register] [PREV]", data, url);
 
   try {
     const response = await fetch(url, {
@@ -80,12 +78,8 @@ export async function register(
       // redirect: "manual",
     });
 
-    // if (!response.ok) {
-    //   throw new Error(`Error ${response.status}: ${response.statusText}`);
-    // }
-    
     const responseData: RegisterResponse = await response.json();
-    console.log("[register] [responseData]", responseData);
+    // console.log("[register] [responseData]", responseData);
 
     return responseData;
   } catch (error: any) {
@@ -94,10 +88,11 @@ export async function register(
 }
 
 export async function sendOtp(data: {
-  email: string;
+  email?: string;
+  document?: string;
 }): Promise<any> {
   const url = `${devUrl}/api/auth/otp/send`;
-  console.log("[sendOtp] [PREV]", data, url);
+  // console.log("[sendOtp] [PREV]", data, url);
 
   try {
     const response = await fetch(url, {
@@ -110,7 +105,7 @@ export async function sendOtp(data: {
       redirect: "manual",
     });
     const responseData = await response.json();
-    console.log("[sendOtp] [responseData]", responseData);
+    // console.log("[sendOtp] [responseData]", responseData);
 
     return responseData;
   } catch (error: any) {
@@ -119,11 +114,12 @@ export async function sendOtp(data: {
 }
 
 export async function verifyOtp(data: {
-  email: string;
+  email?: string;
+  document?: string;
   otp: string;
 }): Promise<any> {
   const url = `${devUrl}/api/auth/otp/verify`;
-  console.log("[verifyOtp] [PREV]", data, url);
+  // console.log("[verifyOtp] [PREV]", data, url);
 
   try {
     const response = await fetch(url, {
@@ -135,7 +131,7 @@ export async function verifyOtp(data: {
       body: JSON.stringify(data),
     });
     const responseData = await response.json();
-    console.log("[verifyOtp] [responseData]", responseData);
+    // console.log("[verifyOtp] [responseData]", responseData);
 
     return responseData;
   } catch (error: any) {
@@ -149,7 +145,7 @@ export async function assignPassword(data: {
   password: string;
 }): Promise<any> {
   const url = `${devUrl}/api/auth/assign-password`;
-  console.log("[assignPassword] [PREV]", data, url);
+  // console.log("[assignPassword] [PREV]", data, url);
 
   try {
     const response = await fetch(url, {
@@ -161,7 +157,7 @@ export async function assignPassword(data: {
       body: JSON.stringify(data),
     });
     const responseData = await response.json();
-    console.log("[assignPassword] [responseData]", responseData);
+    // console.log("[assignPassword] [responseData]", responseData);
 
     return responseData;
   } catch (error: any) {
@@ -175,7 +171,7 @@ export async function assignPasswordByEmail(data: {
   password: string;
 }): Promise<any> {
   const url = `${devUrl}/api/auth/assign-password`;
-  console.log("[assignPassword] [PREV]", data, url);
+  // console.log("[assignPassword] [PREV]", data, url);
 
   try {
     const response = await fetch(url, {
@@ -187,7 +183,7 @@ export async function assignPasswordByEmail(data: {
       body: JSON.stringify(data),
     });
     const responseData = await response.json();
-    console.log("[assignPassword] [responseData]", responseData);
+    // console.log("[assignPassword] [responseData]", responseData);
 
     return responseData;
   } catch (error: any) {

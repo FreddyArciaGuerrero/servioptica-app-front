@@ -1,49 +1,48 @@
-import { ButtonAtom, ColumnAtom, InputTextAtom, RowAtom, SelectAtom } from "../../../../../atoms";
+import { IconButton, InputAdornment } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
+import {
+  ButtonAtom,
+  ColumnAtom,
+  InputTextAtom,
+  RowAtom,
+  SelectAtom,
+} from "../../../../../atoms";
 
 interface FiltersTableProps {
-  siteFilter: string;
-  setSiteFilter: React.Dispatch<React.SetStateAction<string>>;
   stateFilter: string;
   setStateFilter: React.Dispatch<React.SetStateAction<string>>;
   dateFilter: string;
   setDateFilter: React.Dispatch<React.SetStateAction<string>>;
+  onDownloadAction: () => void;
 }
 export const FiltersTable = ({
-  siteFilter,
-  setSiteFilter,
   stateFilter,
   setStateFilter,
   dateFilter,
   setDateFilter,
+  onDownloadAction,
 }: FiltersTableProps) => {
   return (
     <RowAtom style={{ width: "100%", flexFlow: "wrap" }} gap={1}>
-      <ColumnAtom flex={2} style={{ minWidth: 120, maxWidth: 320 }}>
-        <SelectAtom
-          id="site"
-          name="site"
-          variant='small'
-          options={[
-            { option: "Óptica Txt 01", value: "Óptica Txt 01" },
-            { option: "Óptica Txt 02", value: "Óptica Txt 02" },
-            { option: "Óptica Txt 03", value: "Óptica Txt 03" },
-            { option: "Óptica Txt 04", value: "Óptica Txt 04" },
-          ]}
-          placeholder={"Sede"}
-          defaultValue={siteFilter}
-          onChangeCallback={(value) => setSiteFilter(value)}
-        />
-      </ColumnAtom>
       <ColumnAtom flex={2} style={{ minWidth: 100, maxWidth: 320 }}>
         <SelectAtom
           id="state"
           name="state"
-          variant='small'
+          variant="small"
           options={[
-            { option: "En proceso", value: "En proceso" },
-            { option: "Finalizado", value: "Finalizado" },
+            { option: "Recibido", value: "Recibido" },
+            {
+              option: "Pendiente de informacion",
+              value: "Pendiente de informacion o montura cliente",
+            },
+            { option: "En proceso productivo", value: "En proceso productivo" },
+            {
+              option: "En alistamiento para entrega",
+              value: "En alistamiento para entrega",
+            },
+            { option: "Pedido Entregado", value: "Pedido Entregado" },
           ]}
-          placeholder={"Estado"}
+          placeholder={"Todos los estados"}
           defaultValue={stateFilter}
           onChangeCallback={(value) => setStateFilter(value)}
         />
@@ -54,13 +53,22 @@ export const FiltersTable = ({
           variant="small"
           field={{
             id: "date",
-            name: "date",
+            name: "fecha_entrada",
             placeholder: "Fecha",
             default: dateFilter,
           }}
+          defaultValue={dateFilter}
           onChangeCallback={(value) => {
             setDateFilter(String(value));
-            console.log(value);
+          }}
+          InputProps={{
+            endAdornment: dateFilter && (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setDateFilter("")}>
+                  <ClearIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
           }}
         />
       </ColumnAtom>
@@ -84,7 +92,7 @@ export const FiltersTable = ({
               />
             </svg>
           }
-          onClick={() => {}}
+          onClick={onDownloadAction}
         >
           Descarga
         </ButtonAtom>

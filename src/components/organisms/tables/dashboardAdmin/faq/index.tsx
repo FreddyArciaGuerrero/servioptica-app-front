@@ -6,7 +6,7 @@ import { FiltersTable } from "./filters";
 import { DataGrid } from "@mui/x-data-grid";
 import { localeText } from "../../../../atoms/table/libs";
 import columns from "./libs/columns";
-import InsertCommentIcon from '@mui/icons-material/InsertComment';
+import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import { useState } from "react";
 
 import { Navigate } from "react-router-dom";
@@ -114,12 +114,13 @@ export const TableFaqAdmin = () => {
               localeText={localeText}
               style={{ width: "100%" }}
               rows={filteredRows}
+              columnVisibilityModel={{ id: false }}
               columns={columns(handleEdit, handleDelete)}
               initialState={{ pagination: { paginationModel } }}
               pageSizeOptions={[10, 20, 50, 100]}
               checkboxSelection={false}
               rowSelection={false}
-              onRowClick={(params) => console.log(params.row)}
+              onRowClick={() => {}}
               getRowClassName={(params) =>
                 params.indexRelativeToCurrentPage % 2 === 0
                   ? "alternate-row"
@@ -133,7 +134,7 @@ export const TableFaqAdmin = () => {
           <FaqForm
             goBack={() => {
               setView("table");
-              setEditData(null)
+              setEditData(null);
             }}
             onCallBack={(data) => {
               handleAddFaqsData(data);

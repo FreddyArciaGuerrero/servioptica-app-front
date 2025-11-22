@@ -7,13 +7,18 @@ type Update = {
   newValue: string;
 };
 
-export const updateDefaultsValues = ({data, updates}:{
-  data: GroupFields[],
-  updates: Update[]
+export const updateDefaultsValues = ({
+  data,
+  updates,
+}: {
+  data: GroupFields[];
+  updates: Update[];
 }): GroupFields[] => {
   const newData = data.map((group) => {
     // Encuentra todas las actualizaciones correspondientes a este grupo
-    const groupUpdates = updates.filter((update) => update.groupName === group.groupName);
+    const groupUpdates = updates.filter(
+      (update) => update.groupName === group.groupName
+    );
 
     if (groupUpdates.length > 0) {
       const updatedFields = group.fields.map((field) => {
@@ -23,7 +28,11 @@ export const updateDefaultsValues = ({data, updates}:{
         );
 
         if (fieldUpdate) {
-          return { ...field, default: fieldUpdate.newValue };
+          if (field.type === "select" && field.options) {
+            return { ...field, default: fieldUpdate.newValue.toString() };
+          } else {
+            return { ...field, default: fieldUpdate.newValue };
+          }
         }
         return field;
       });

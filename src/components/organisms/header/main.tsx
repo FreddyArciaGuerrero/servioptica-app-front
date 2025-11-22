@@ -70,7 +70,7 @@ export const MainHeader = () => {
             style={{ color: BASE_COLORS.blue, minWidth: 300 }}
           >
             <Link
-              to={"/login"}
+              to={"/login_admin"}
               style={{ textAlign: "center", textDecoration: "none" }}
             >
               <RowAtom
@@ -79,7 +79,11 @@ export const MainHeader = () => {
                 style={{ width: 280, justifyContent: "center" }}
               >
                 <TextAtom
-                  style={{ textAlign: "center", textDecoration: "none", color: BASE_COLORS.blue }}
+                  style={{
+                    textAlign: "center",
+                    textDecoration: "none",
+                    color: BASE_COLORS.blue,
+                  }}
                 >
                   Acceso de Administrador
                 </TextAtom>

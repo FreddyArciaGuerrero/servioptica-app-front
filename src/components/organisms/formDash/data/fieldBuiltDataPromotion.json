@@ -13,9 +13,8 @@
         "options": null,
         "default": "",
         "placeholder": "",
-        "textError": "Este campo requerido",
         "minlength": 3,
-        "maxlength": 60
+        "maxlength": 255
       },
       {
         "id": 2,
@@ -27,23 +26,21 @@
         "options": null,
         "default": "",
         "placeholder": "",
-        "textError": "¡La contraseña es muy débil!",
-        "minlength": 1,
+        "minlength": 3,
         "maxlength": 1440
       },
       {
         "id": 3,
         "label": "Link o url de destino:",
         "name": "link",
-        "type": "text",
+        "type": "url",
         "columnSize": 12,
         "important": true,
         "options": null,
         "default": "",
         "placeholder": "",
-        "textError": "Este campo requerido",
         "minlength": 3,
-        "maxlength": 60
+        "maxlength": 255
       },
       {
         "id": 4,
@@ -55,7 +52,6 @@
         "options": null,
         "default": "",
         "placeholder": "",
-        "textError": "Este campo requerido",
         "minlength": 3,
         "maxlength": 60
       },
@@ -69,7 +65,6 @@
         "options": null,
         "default": "",
         "placeholder": "",
-        "textError": "Este campo requerido",
         "minlength": 3,
         "maxlength": 60
       },
@@ -83,7 +78,7 @@
         "options": null,
         "default": "",
         "placeholder": "Adjuntar Imágen",
-        "textError": "Este campo requerido",
+        "description": "Tamaño recomendado 600px de ancho X 300px de alto, \n peso máximo 2mb, formatos permitidos: jpg, jpeg, png",
         "minlength": 3,
         "maxlength": 1060
       }

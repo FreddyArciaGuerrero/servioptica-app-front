@@ -1,7 +1,12 @@
+import { useAtom } from "jotai";
+import { OrderData } from "../../../api/Orders/type";
 import { BASE_COLORS } from "../../../style/constants";
 import { ColumnAtom, RowAtom, TextAtom } from "../../atoms";
+import { appStoreAtom } from "../../../store/Auth";
+import { uxDateFormat } from "../../../utils";
 
-export const TopOrderTracking = () => {
+export const TopOrderTracking = ({data}:{data: OrderData | null}) => {
+  const [appStore] = useAtom(appStoreAtom);
   return (
     <RowAtom gap={4} style={{ width: "100%" }} alignItems="center">
       <ColumnAtom style={{ flex: "none" }}>
@@ -22,27 +27,27 @@ export const TopOrderTracking = () => {
           Pedido
         </TextAtom>
       </ColumnAtom>
+      {appStore.auth?.access_token && <ColumnAtom style={{ flex: "none" }}>
+        <TextAtom style={{ color: BASE_COLORS.blue }}>{data?.id_cliente_contacto ?? '---'}</TextAtom>
+      </ColumnAtom>}
+      {appStore.auth?.access_token &&<ColumnAtom style={{ flex: "none" }}>
+        <TextAtom style={{ color: BASE_COLORS.blue }}>{data?.pedido ?? '---'}</TextAtom>
+      </ColumnAtom>}
       <ColumnAtom style={{ flex: "none" }}>
-        <TextAtom style={{ color: BASE_COLORS.blue }}>110</TextAtom>
-      </ColumnAtom>
-      <ColumnAtom style={{ flex: "none" }}>
-        <TextAtom style={{ color: BASE_COLORS.blue }}>1013138654</TextAtom>
-      </ColumnAtom>
-      <ColumnAtom style={{ flex: "none" }}>
-        <TextAtom style={{ color: BASE_COLORS.blue }}>Óptica Txt 01.</TextAtom>
+        <TextAtom style={{ color: BASE_COLORS.blue }}>{data?.cliente_contacto ?? '---'}.</TextAtom>
       </ColumnAtom>
       <ColumnAtom style={{ flex: "none" }}>
         <TextAtom
           style={{ color: BASE_COLORS.blue, textDecoration: "underline" }}
         >
-          En proceso
+          {data?.estado ?? '---'}
         </TextAtom>
       </ColumnAtom>
       <ColumnAtom style={{ flex: "none" }}>
         <TextAtom
           style={{ color: BASE_COLORS.blue, textDecoration: "underline" }}
         >
-          02/09/2024
+           {data?.fecha_estimada ? uxDateFormat(data?.fecha_estimada.split(' ')[0]) : '---'}
         </TextAtom>
       </ColumnAtom>
     </RowAtom>

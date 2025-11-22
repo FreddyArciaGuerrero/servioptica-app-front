@@ -5,7 +5,7 @@ import useGroupVisibility from "./hook/useGroupVisibility";
 import { validateFields } from "./lib/validateFields";
 import { ErrorFrormType, FormModuleProps, PreDataType } from "./type";
 import GridAtom from "../../atoms/grid";
-import './style.css'
+import "./style.css";
 
 export const FormModule = ({
   actionBackBtnLabel,

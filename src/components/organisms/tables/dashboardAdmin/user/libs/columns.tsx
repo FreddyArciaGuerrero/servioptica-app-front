@@ -2,9 +2,10 @@ import { GridColDef } from "@mui/x-data-grid";
 import generalColumnProps from "../../../../../atoms/table/libs/generalColumnProps";
 import { ButtonAtom, RowAtom } from "../../../../../atoms";
 
-
-
-const columns = (handleEdit: (id: number) => void, handleDelete: (id: number) => void): GridColDef[] => {
+const columns = (
+  handleEdit: (id: number) => void,
+  handleDelete: (id: number) => void
+): GridColDef[] => {
   const columnData: GridColDef[] = [
     {
       ...generalColumnProps,
@@ -21,14 +22,39 @@ const columns = (handleEdit: (id: number) => void, handleDelete: (id: number) =>
     },
     {
       ...generalColumnProps,
+      field: "type",
+      headerName: "Tipo",
+      renderCell: (params) => {
+        return params.row.type === 1 ? "Administrador" : "Cliente";
+      },
+      minWidth: 120,
+    },
+    {
+      ...generalColumnProps,
       field: "document",
       headerName: "NIT",
       minWidth: 120,
     },
     {
       ...generalColumnProps,
-      field: "date",
+      field: "email",
+      headerName: "Correo",
+      minWidth: 120,
+    },
+    {
+      ...generalColumnProps,
+      field: "created_at",
       headerName: "Fecha de publicación",
+      minWidth: 120,
+      valueGetter: (value, row) =>
+        `${String(row.date).split("-")[2]}/${String(row.date).split("-")[1]}/${
+          String(row.date).split("-")[0]
+        }`,
+    },
+    {
+      ...generalColumnProps,
+      field: "date",
+      headerName: "Última fecha de ingreso",
       minWidth: 120,
       valueGetter: (value, row) =>
         `${String(row.date).split("-")[2]}/${String(row.date).split("-")[1]}/${

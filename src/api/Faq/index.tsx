@@ -1,6 +1,7 @@
 import { GetFaqActivesResponse } from "./type";
 
-const devUrl = "https://tracking-servioptica-api.txt.co";
+//const devUrl = "https://apitrazabilidadco.essilorluxottica.com";
+const devUrl = process.env.REACT_APP_BASE_URL;
 
 export async function getFaqActives(): Promise<GetFaqActivesResponse> {
   const url = `${devUrl}/api/faqs/getActives`;
@@ -13,7 +14,7 @@ export async function getFaqActives(): Promise<GetFaqActivesResponse> {
       },
     });
     const responseData: GetFaqActivesResponse = await response.json();
-    console.log("[getFaqActives] [responseData]", responseData);
+    // console.log("[getFaqActives] [responseData]", responseData);
     return responseData;
   } catch (error: any) {
     return error;
@@ -34,7 +35,7 @@ export async function getFaqAdmin(
       },
     });
     const responseData: GetFaqActivesResponse = await response.json();
-    console.log("[getFaqAdmin] [responseData]", responseData);
+    // console.log("[getFaqAdmin] [responseData]", responseData);
     return responseData;
   } catch (error: any) {
     console.error("[getFaqAdmin] [error]", error);
@@ -46,13 +47,15 @@ export async function addFaqAdmin({
   token,
   question,
   answer,
+  state,
 }: {
   token: string;
   question: string;
   answer: string;
+  state: string;
 }): Promise<GetFaqActivesResponse> {
   const url = `${devUrl}/api/faqs`;
-  console.log("[addFaqAdmin] [PREV]", { question, answer });
+  // console.log("[addFaqAdmin] [PREV]", { question, answer });
 
   try {
     const response = await fetch(url, {
@@ -62,11 +65,15 @@ export async function addFaqAdmin({
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ question: question, answer: answer }),
+      body: JSON.stringify({
+        question: question,
+        answer: answer,
+        status: state === "Active" ? 1 : 0,
+      }),
     });
 
     const responseData: GetFaqActivesResponse = await response.json();
-    console.log("[addFaqAdmin] [responseData]", responseData);
+    // console.log("[addFaqAdmin] [responseData]", responseData);
 
     return responseData;
   } catch (error: any) {
@@ -75,19 +82,17 @@ export async function addFaqAdmin({
   }
 }
 
-export async function updateFaqAdmin({
-  token,
-  id,
-  question,
-  answer,
-}: {
+export async function updateFaqAdmin(props: {
   token: string;
   id: number;
   question: string;
   answer: string;
+  state: string;
 }): Promise<any> {
+  const { token, id, state, ...data } = props;
+  const newData = { ...data, status: state === "Active" ? 1 : 0 };
   const url = `${devUrl}/api/faqs/${id}`;
-  console.log("[updateFaqAdmin] [PREV]", { id, question, answer });
+  // console.log("[updateFaqAdmin] [PREV]", newData);
 
   try {
     const response = await fetch(url, {
@@ -97,8 +102,9 @@ export async function updateFaqAdmin({
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(newData),
     });
-    console.log("[updateFaqAdmin] [response]", response);
+    // console.log("[updateFaqAdmin] [response]", await response.json());
     if (response.status !== 200) {
       return false;
     }
@@ -117,7 +123,7 @@ export async function removeFaqAdmin({
   id: number;
 }): Promise<any> {
   const url = `${devUrl}/api/faqs/${id}`;
-  console.log("[removeFaqAdmin] [PREV]", id);
+  // console.log("[removeFaqAdmin] [PREV]", id);
 
   try {
     const response = await fetch(url, {
@@ -129,7 +135,7 @@ export async function removeFaqAdmin({
       },
       body: JSON.stringify({ id: id }),
     });
-    console.log("[removeFaqAdmin] [response]", response);
+    // console.log("[removeFaqAdmin] [response]", response);
     if (response.status !== 204) {
       return false;
     }

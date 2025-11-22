@@ -9,20 +9,20 @@
 }
 
 .Variant_form > div {
-    gap: 32px;
+  gap: 32px;
 }
 
 .Variant_form .FormActions > div > div > div {
-    justify-content: space-between;
-    width: 100%;
-    flex-direction: row-reverse;
+  justify-content: space-between;
+  width: 100%;
+  flex-direction: row-reverse;
 }
 .Variant_form .FormActions > div > div > div .MuiButtonBase-root {
-    padding: 0;
-    min-height: 44px;
-    min-width: 120px !important;
+  padding: 0;
+  min-height: 44px;
+  min-width: 120px !important;
 }
 .Variant_form p.MuiFormHelperText-root.Mui-error {
-    top: 48px;
-    text-align: left;
+  top: calc(100% + 1px);
+  text-align: left;
 }

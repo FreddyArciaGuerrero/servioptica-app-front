@@ -10,14 +10,24 @@ import LogoServioptica from "../../../assets/img/logo_servioptica@2x.webp";
 import BkGeneral from "../../../assets/img/bkGeneral.webp";
 import bkGeneralVideo from "../../../assets/videos/bkGeneral.mp4";
 
-import PersonIcon from "@mui/icons-material/Person";
 import { ButtonAtom, InputTextAtom, SpaceAtom, TitleAtom } from "../../atoms";
 import { BASE_COLORS } from "../../../style/constants";
 import { useState } from "react";
+import { useOrderTracking } from "../../../hooks/useOrderTracking";
 
 export const SearchHeader = () => {
   const navetgate = useNavigate();
   const [searchValue, setSearchValue] = useState<string | null>(null);
+  const { loading, fetchTableData } = useOrderTracking();
+
+  const handleSearch = async () => {
+    if (searchValue) {
+      const data = await fetchTableData(searchValue);
+      if (data) {
+        navetgate(`/order-tracking/${searchValue}`);
+      }
+    }
+  };
 
   return (
     <header style={{ position: "relative", display: "flex" }}>
@@ -79,7 +89,7 @@ export const SearchHeader = () => {
               gap={2}
               style={{ width: 280, justifyContent: "center" }}
             >
-              <GridAtom
+              {/*<GridAtom
                 p={1}
                 style={{
                   backgroundColor: "#fff",
@@ -88,7 +98,7 @@ export const SearchHeader = () => {
                 }}
               >
                 <PersonIcon style={{ color: BASE_COLORS.blue }} />
-              </GridAtom>
+              </GridAtom>*/}
             </RowAtom>
           </ColumnAtom>
         </RowAtom>
@@ -118,18 +128,15 @@ export const SearchHeader = () => {
               <InputTextAtom
                 field={{ id: "search_orders", placeholder: "Nº de Pedido" }}
                 onChangeCallback={(value) => {
-                  console.log(value);
                   setSearchValue(value as string);
                 }}
               />
             </ColumnAtom>
             <ColumnAtom style={{ flex: "none" }}>
               <ButtonAtom
-                disabled={!searchValue}
-                onClick={() => {
-                  navetgate(`/order-tracking/${searchValue}`);
-                  console.log("Buscar");
-                }}
+                loading={loading}
+                disabled={!searchValue || loading}
+                onClick={handleSearch}
                 style={{ minWidth: 173 }}
               >
                 Buscar

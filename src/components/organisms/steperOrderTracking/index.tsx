@@ -1,20 +1,40 @@
-import { useMemo } from "react";
 import { GridAtom, RowAtom } from "../../atoms";
-import {
-  OrderDelivered,
-  OrderDelivery,
-  OrderEnlistment,
-  OrderProduction,
-  OrderReceived,
-} from "./step";
 import "./style.css";
+import { OrderData } from "../../../api/Orders/type";
+import { GeneralStep } from "./step/generalStep";
 
 export const SteperOrderTracking = ({
   currentStep,
+  data,
 }: {
   currentStep: number;
+  data: OrderData[] | null;
 }) => {
-  const step = useMemo(() => currentStep, [currentStep]);
+  const minSteps = 5;
+  const filledData = [...(data || [])];
+  while (filledData.length < minSteps) {
+    const index = filledData.length + 1;
+    filledData.push({
+      id: index,
+      document_no: '',
+      seq_no: `${index}`,
+      seq_no_original: '',
+      fecha_entrada: '',
+      pedido: '',
+      pedido_cliente: '',
+      lote_num_laboratorio: '',
+      estado: '',
+      fecha_estado: '',
+      fecha_estimada: '',
+      fecha_recalculo: '',
+      fecha_modificacion: '',
+      id_cliente_contacto: '',
+      razon_social: '',
+      nit: '',
+      cliente_contacto: '',
+      escenario: '',
+    });
+  }
 
   return (
     <GridAtom className="SteperOrderTracking_Box">
@@ -26,19 +46,17 @@ export const SteperOrderTracking = ({
         <GridAtom className="SteperOrderTracking_Bar">
           <GridAtom
             style={{
-              width: `${step * (100 / 5)}%`,
-              position: "absolute",
-              height: "100%",
-              background: "rgb(175 214 247)",
+              width: currentStep <= 5 ? `${currentStep * (100 / 5)}%` : '100%',
+              position: 'absolute',
+              height: '100%',
+              background: 'rgb(175 214 247)',
               borderRadius: 30,
             }}
           />
         </GridAtom>
-        <OrderReceived actibe={step >= 1} />
-        <OrderProduction actibe={step >= 2} />
-        <OrderEnlistment actibe={step >= 3} />
-        <OrderDelivery actibe={step >= 4} />
-        <OrderDelivered actibe={step >= 5} />
+        {filledData.map((item, index) => (
+          <GeneralStep data={item} key={index} />
+        ))}
       </RowAtom>
     </GridAtom>
   );

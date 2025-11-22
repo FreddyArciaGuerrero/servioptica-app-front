@@ -11,34 +11,38 @@ const columns: GridColDef[] = [
   },
   {
     ...generalColumnProps,
-    field: "order",
+    field: "document_no",
     headerName: "Pedido Nº",
-    minWidth: 120,
   },
   {
     ...generalColumnProps,
-    field: "site",
+    field: "cliente_contacto",
     headerName: "Sede",
-    minWidth: 120,
   },
   {
     ...generalColumnProps,
-    field: "lot",
+    field: "lote_num_laboratorio",
     headerName: "Lote",
-    minWidth: 120,
+    minWidth: 200,
+    maxWidth: 200,
   },
   {
     ...generalColumnProps,
-    field: "state",
+    field: "estado",
     headerName: "Estado",
-    minWidth: 120,
+    minWidth: 200,
+    maxWidth: 200,
   },
   {
     ...generalColumnProps,
-    field: "date",
-    headerName: "Fecha",
-    minWidth: 120,
-    valueGetter: (value, row) => `${String(row.date).split('-')[2]}/${String(row.date).split('-')[1]}/${String(row.date).split('-')[0]}`,
+    field: "fecha_entrada",
+    headerName: "Fecha de Entrada",
+    minWidth: 200,
+    maxWidth: 200,
+    valueGetter: (value, row) => {
+      const splitDate = String(value).split(" ")[0].split("-");
+      return `${splitDate[2]}/${splitDate[1]}/${splitDate[0]}`;
+    },
   },
   // {
   //     field: 'actions',

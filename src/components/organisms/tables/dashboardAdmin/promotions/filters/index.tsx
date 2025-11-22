@@ -3,9 +3,10 @@ import {
   ColumnAtom,
   InputTextAtom,
   RowAtom,
-  SelectAtom,
 } from "../../../../../atoms";
 import { TablePromotionsAdminView } from "..";
+import { IconButton, InputAdornment } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
 interface FiltersTableProps {
   stateFilter: string;
@@ -15,8 +16,6 @@ interface FiltersTableProps {
   setView: React.Dispatch<React.SetStateAction<TablePromotionsAdminView>>;
 }
 export const FiltersTable = ({
-  stateFilter,
-  setStateFilter,
   dateFilter,
   setDateFilter,
   setView,
@@ -31,22 +30,8 @@ export const FiltersTable = ({
         <RowAtom
           style={{ width: "100%", flexFlow: "wrap" }}
           gap={1}
-          justifyContent='flex-start'
+          justifyContent="flex-start"
         >
-          <ColumnAtom flex={2} style={{ minWidth: 100, maxWidth: 160 }}>
-            <SelectAtom
-              id="state"
-              name="state"
-              variant="small"
-              options={[
-                { option: "En proceso", value: "En proceso" },
-                { option: "Finalizado", value: "Finalizado" },
-              ]}
-              placeholder={"Estado"}
-              defaultValue={stateFilter}
-              onChangeCallback={(value) => setStateFilter(value)}
-            />
-          </ColumnAtom>
           <ColumnAtom flex={2} style={{ minWidth: 100, maxWidth: 160 }}>
             <InputTextAtom
               type="date"
@@ -57,9 +42,18 @@ export const FiltersTable = ({
                 placeholder: "Fecha",
                 default: dateFilter,
               }}
+              defaultValue={dateFilter}
               onChangeCallback={(value) => {
                 setDateFilter(String(value));
-                console.log(value);
+              }}
+              InputProps={{
+                endAdornment: dateFilter && (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setDateFilter("")}>
+                      <ClearIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
             />
           </ColumnAtom>

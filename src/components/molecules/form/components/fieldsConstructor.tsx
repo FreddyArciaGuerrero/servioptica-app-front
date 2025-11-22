@@ -16,6 +16,7 @@ import InputCheckBoxAtom from "../../../atoms/inputCheckbox";
 import SelectAtom from "../../../atoms/select";
 import { BASE_COLORS } from "../../../../style/constants";
 import InputFileAtom from "../../../atoms/inputFile";
+import { TextAtom } from "../../../atoms";
 
 const sizeWidth = (columnSize: number): string => {
   const percentage = (columnSize / 12) * 100;
@@ -48,12 +49,13 @@ const FieldConstructor = ({
         <LabelAtom
           htmlFor={`${field.id}_${field.name}_${index + 1}`}
           important={field.important}
-          style={{color: BASE_COLORS.blue, margin: 0}}
+          style={{ color: BASE_COLORS.blue, margin: 0 }}
         >
           {field.label}
         </LabelAtom>
       )}
       {children}
+      {field.description && <TextAtom>{field.description}</TextAtom>}
     </GridAtom>
   );
 };
@@ -333,6 +335,28 @@ export const FieldsConstructor = ({
                   onChangeCallback={(value) =>
                     handleFieldChange(field.name!, value)
                   }
+                />
+              </FieldConstructor>
+            );
+          case "url":
+            return (
+              <FieldConstructor
+                key={`${field.id}_${index + 1}`}
+                field={field}
+                index={index}
+              >
+                <InputTextAtom
+                  field={{
+                    ...field,
+                    id: `${field.id}_${field.name}_${index + 1}`,
+                  }}
+                  type={"text"}
+                  disabled={false}
+                  defaultValue={defaultTextValue}
+                  erroForm={field.important && errorForm?.fieldId === field.id}
+                  onChangeCallback={(value) => {
+                    handleFieldChange(field.name!, value);
+                  }}
                 />
               </FieldConstructor>
             );

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   ButtonAtom,
   ColumnAtom,
@@ -19,8 +19,12 @@ import { useState } from "react";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { appStoreAtom } from "../../../store/Auth";
 import { useAtom } from "jotai";
+import { searchOrder } from "../../../store/searchOrder";
+import { hideSearchAtom } from "../../../store/searchOrder/hideSearchAtom";
 
 export const DashHeaderAdmin = () => {
+  const [hideSearch] = useAtom(hideSearchAtom);
+  const [, setSearchOrderAtom] = useAtom(searchOrder);
   const [, setAppStore] = useAtom(appStoreAtom);
   const navetgate = useNavigate();
   const [searchValue, setSearchValue] = useState<string | null>(null);
@@ -31,6 +35,11 @@ export const DashHeaderAdmin = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleSearchOreder = () => {
+    // console.log("searchValue", searchValue);
+    setSearchOrderAtom((prev) => ({ ...prev, document: searchValue }));
   };
 
   return (
@@ -64,15 +73,13 @@ export const DashHeaderAdmin = () => {
             justifyContent="center"
             gap={2}
           >
-            <Link to={"/"}>
-              <img
-                style={{ objectFit: "contain" }}
-                src={LogoServioptica}
-                alt={"Logo Servioptica"}
-                width={215}
-                height={91}
-              />
-            </Link>
+            <img
+              style={{ objectFit: "contain" }}
+              src={LogoServioptica}
+              alt={"Logo Servioptica"}
+              width={215}
+              height={91}
+            />
             <TextAtom
               type="small"
               style={{
@@ -87,12 +94,12 @@ export const DashHeaderAdmin = () => {
           <ColumnAtom
             flex={3}
             alignItems="flex-end"
-            style={{ color: BASE_COLORS.blue, minWidth: 300 }}
+            style={{ color: BASE_COLORS.blue, minWidth: 80 }}
           >
             <RowAtom
               alignItems="center"
               gap={2}
-              style={{ width: 280, justifyContent: "center" }}
+              style={{ justifyContent: "flex-end" }}
             >
               <Button
                 id="basic-button"
@@ -124,6 +131,7 @@ export const DashHeaderAdmin = () => {
                 <MenuItem
                   onClick={() => {
                     setAppStore({ auth: null, user: null });
+                    localStorage.removeItem("appStoreAtom");
                     handleClose();
                   }}
                 >
@@ -134,49 +142,53 @@ export const DashHeaderAdmin = () => {
           </ColumnAtom>
         </RowAtom>
         <SpaceAtom v={48} />
-        <GridAtom
-          style={{ width: "100%", marginBottom: -50 }}
-          alignItems="center"
-          gap={4}
-        >
-          <TitleAtom
-            style={{
-              color: BASE_COLORS.blue,
-              fontSize: 20,
-              textAlign: "center",
-              textShadow: "0px 3px 6px #FFFFFF",
-              fontWeight: 900,
-            }}
-          >
-            Consulta de Pedido
-          </TitleAtom>
-          <RowAtom
+        {!hideSearch && (
+          <GridAtom
+            style={{ width: "100%", marginBottom: -50 }}
             alignItems="center"
-            gap={2}
-            style={{ width: "100%", maxWidth: 600 }}
+            gap={4}
           >
-            <ColumnAtom flex={10}>
-              <InputTextAtom
-                field={{ id: "search_orders", placeholder: "Nº de Pedido" }}
-                onChangeCallback={(value) => {
-                  setSearchValue(value as string);
-                }}
-              />
-            </ColumnAtom>
-            <ColumnAtom style={{ flex: "none" }}>
-              <ButtonAtom
-                disabled={!searchValue}
-                onClick={() => {
-                  navetgate(`/order-tracking/${searchValue}`);
-                  console.log("Buscar");
-                }}
-                style={{ minWidth: 173 }}
-              >
-                Buscar
-              </ButtonAtom>
-            </ColumnAtom>
-          </RowAtom>
-        </GridAtom>
+            <TitleAtom
+              style={{
+                color: BASE_COLORS.blue,
+                fontSize: 20,
+                textAlign: "center",
+                textShadow: "0px 3px 6px #FFFFFF",
+                fontWeight: 900,
+              }}
+            >
+              Consulta de NIT
+            </TitleAtom>
+            <RowAtom
+              alignItems="center"
+              gap={2}
+              style={{ width: "100%", maxWidth: 600 }}
+            >
+              <ColumnAtom flex={10}>
+                <InputTextAtom
+                  field={{
+                    id: "search_orders",
+                    placeholder: "Nº de Nit Optica",
+                  }}
+                  onChangeCallback={(value) => {
+                    setSearchValue(value as string);
+                  }}
+                />
+              </ColumnAtom>
+              <ColumnAtom style={{ flex: "none" }}>
+                <ButtonAtom
+                  disabled={!searchValue}
+                  onClick={() => {
+                    handleSearchOreder();
+                  }}
+                  style={{ minWidth: 173 }}
+                >
+                  Buscar
+                </ButtonAtom>
+              </ColumnAtom>
+            </RowAtom>
+          </GridAtom>
+        )}
       </ContainerAtom>
     </header>
   );

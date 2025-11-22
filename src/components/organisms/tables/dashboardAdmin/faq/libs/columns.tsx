@@ -2,9 +2,10 @@ import { GridColDef } from "@mui/x-data-grid";
 import generalColumnProps from "../../../../../atoms/table/libs/generalColumnProps";
 import { ButtonAtom, RowAtom } from "../../../../../atoms";
 
-
-
-const columns = (handleEdit: (id: number) => void, handleDelete: (id: number) => void): GridColDef[] => {
+const columns = (
+  handleEdit: (id: number) => void,
+  handleDelete: (id: number) => void
+): GridColDef[] => {
   const columnData: GridColDef[] = [
     {
       ...generalColumnProps,
@@ -17,19 +18,20 @@ const columns = (handleEdit: (id: number) => void, handleDelete: (id: number) =>
       ...generalColumnProps,
       field: "question",
       headerName: "Pregunta",
-      minWidth: 120,
+      minWidth: 240,
+      maxWidth: 320,
     },
     {
       ...generalColumnProps,
       field: "state",
       headerName: "Estado",
-      minWidth: 120,
     },
     {
       ...generalColumnProps,
       field: "date",
       headerName: "Fecha de publicación",
-      minWidth: 120,
+      minWidth: 200,
+      maxWidth: 200,
       valueGetter: (value, row) =>
         `${String(row.date).split("-")[2]}/${String(row.date).split("-")[1]}/${
           String(row.date).split("-")[0]
@@ -38,7 +40,8 @@ const columns = (handleEdit: (id: number) => void, handleDelete: (id: number) =>
     {
       field: "actions",
       headerName: "Acciones",
-      width: 200,
+      minWidth: 180,
+      maxWidth: 180,
       renderCell: (params) => (
         <RowAtom
           style={{ width: "100%", height: "100%" }}

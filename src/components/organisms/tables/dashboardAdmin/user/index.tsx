@@ -46,9 +46,11 @@ export const TableUserAdmin = () => {
   } = useTableUsersAdmin();
 
   const filteredRows = usersData?.filter((row) => {
+    //console.log({usersData});
     const matchesDate = dateFilter ? row.date === dateFilter : true;
-    const matchesState = stateFilter ? String(row.status).includes(stateFilter) : true;
-    console.log(String(row.status), stateFilter, String(row.status).includes(stateFilter))
+    const matchesState = stateFilter
+      ? String(row.status).includes(stateFilter)
+      : true;
 
     return matchesDate && matchesState;
   });
@@ -118,12 +120,13 @@ export const TableUserAdmin = () => {
               localeText={localeText}
               style={{ width: "100%" }}
               rows={filteredRows}
+              columnVisibilityModel={{ id: false }}
               columns={columns(handleEdit, handleDelete)}
               initialState={{ pagination: { paginationModel } }}
               pageSizeOptions={[10, 20, 50, 100]}
               checkboxSelection={false}
               rowSelection={false}
-              onRowClick={(params) => console.log(params.row)}
+              onRowClick={() => {}}
               getRowClassName={(params) =>
                 params.indexRelativeToCurrentPage % 2 === 0
                   ? "alternate-row"

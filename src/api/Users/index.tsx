@@ -4,7 +4,8 @@ import {
   UpdateUsersRequest,
 } from "./type";
 
-const devUrl = "https://tracking-servioptica-api.txt.co";
+//const devUrl = "http://127.0.0.1:8000";
+const devUrl = process.env.REACT_APP_BASE_URL;
 
 export async function getUsersAdmin(
   token: string
@@ -20,7 +21,7 @@ export async function getUsersAdmin(
       },
     });
     const responseData: GetUsersActivesResponse = await response.json();
-    console.log("[getUsersAdmin] [responseData]", responseData);
+    // console.log("[getUsersAdmin] [responseData]", responseData);
     return responseData;
   } catch (error: any) {
     console.error("[getUsersAdmin] [error]", error);
@@ -32,7 +33,7 @@ export async function addUsersAdmin(
   props: AddUsersRequest
 ): Promise<GetUsersActivesResponse> {
   const url = `${devUrl}/api/users`;
-  console.log("[addUsersAdmin] [PREV]", props);
+  // console.log("[addUsersAdmin] [PREV]", props);
 
   try {
     const response = await fetch(url, {
@@ -44,10 +45,10 @@ export async function addUsersAdmin(
       },
       body: JSON.stringify({ ...props, status: 1 }),
     });
-    console.log("[addUsersAdmin] [response]", response);
+    // console.log("[addUsersAdmin] [response]", response);
 
     const responseData: GetUsersActivesResponse = await response.json();
-    console.log("[addUsersAdmin] [responseData]", responseData);
+    // console.log("[addUsersAdmin] [responseData]", responseData);
 
     return responseData;
   } catch (error: any) {
@@ -65,7 +66,7 @@ export async function updateUsersAdmin(
   const { password, ...otherProps } = props;
   const preData = password?.length === 0 ? { ...otherProps } : { ...props };
 
-  console.log("[updateUsersAdmin] [PREV]", { ...preData });
+  // console.log("[updateUsersAdmin] [PREV]", { ...preData });
 
   try {
     const response = await fetch(url, {
@@ -77,9 +78,9 @@ export async function updateUsersAdmin(
       },
       body: JSON.stringify({ ...preData }),
     });
-    console.log("[updateUsersAdmin] [response]", response);
+    // console.log("[updateUsersAdmin] [response]", response);
     const responseData = await response.json();
-    console.log("[updateUsersAdmin] [responseData]", responseData);
+    // console.log("[updateUsersAdmin] [responseData]", responseData);
     if (response.status !== 200) {
       return false;
     }
@@ -99,7 +100,7 @@ export async function removeUsersAdmin({
   id: number;
 }): Promise<any> {
   const url = `${devUrl}/api/users/${id}`;
-  console.log("[removeUsersAdmin] [PREV]", id);
+  // console.log("[removeUsersAdmin] [PREV]", id);
 
   try {
     const response = await fetch(url, {
@@ -111,7 +112,7 @@ export async function removeUsersAdmin({
       },
       body: JSON.stringify({ id: id }),
     });
-    console.log("[removeUsersAdmin] [response]", response);
+    // console.log("[removeUsersAdmin] [response]", response);
     if (response.status !== 204) {
       return false;
     }

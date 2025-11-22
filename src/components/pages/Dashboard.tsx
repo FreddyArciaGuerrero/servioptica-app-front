@@ -14,11 +14,11 @@ import { CircularProgress } from "@mui/material";
 import { useAtom } from "jotai";
 import { appStoreAtom } from "../../store/Auth";
 import { Navigate } from "react-router-dom";
-import { TablePromotions } from "../organisms/tables/dashboardAdmin/promotions";
+import { TableMainAdmin } from "../organisms/tables/dashboardAdmin/main";
 
 const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  
+
   const [promotionsData, setPromotionsData] = useState<Array<{
     img: string;
     title: string;
@@ -36,11 +36,12 @@ const Dashboard: React.FC = () => {
           img: item.img,
           title: item.title,
           description: item.description,
+          link: item.link,
         }));
         setPromotionsData(formatingData);
       }
     } catch (error) {
-      console.error("Error fetching FAQs:", error);
+      console.error("Error fetching Promotions:", error);
     } finally {
       setLoading(false);
     }
@@ -52,8 +53,9 @@ const Dashboard: React.FC = () => {
       fetchPromotionsData();
     }
   }, [loading]);
-  
+
   const [appStore] = useAtom(appStoreAtom);
+
   if (!appStore.auth?.access_token) {
     return <Navigate to="/login" replace />;
   }
@@ -76,7 +78,7 @@ const Dashboard: React.FC = () => {
     >
       <SpaceAtom v={40} />
       <RowAtom
-        gap={10}
+        gap={4}
         style={{
           minHeight: 400,
           flexFlow: "wrap",
@@ -86,7 +88,7 @@ const Dashboard: React.FC = () => {
         p={3}
       >
         <ColumnAtom flex={8} style={{ minWidth: 300 }}>
-          <TablePromotions />
+          <TableMainAdmin />
         </ColumnAtom>
         <ColumnAtom flex={4} style={{ minWidth: 300 }}>
           {loading && (

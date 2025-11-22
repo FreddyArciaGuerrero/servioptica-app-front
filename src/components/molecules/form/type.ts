@@ -10,7 +10,8 @@ export type FieldsTypes =
   | "phone"
   | "tel"
   | "file"
-  | "password";
+  | "password"
+  | "url";
 
 type FieldsColumn = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
@@ -32,6 +33,7 @@ export interface FieldsStructure {
   textError: string;
   minlength: number;
   maxlength: number;
+  description?: string;
 }
 
 export interface GroupFields {
@@ -68,6 +70,7 @@ export type ErrorStructure = {
 export type ErrorFrormType = null | ErrorStructure;
 
 export interface FormModuleProps {
+  document?: string;
   variant?: "form" | "login";
   error?: ErrorFrormType[] | null;
   actionBtnLabel?: string;

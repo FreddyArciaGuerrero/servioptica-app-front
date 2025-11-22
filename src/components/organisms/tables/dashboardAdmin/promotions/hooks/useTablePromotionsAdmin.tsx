@@ -12,9 +12,11 @@ import { appStoreAtom } from "../../../../../../store/Auth";
 import { TablePromotionsAdminView } from "..";
 import { GetPromotionsActivesData } from "../../../../../../api/Promotions/type";
 import { fileToBase64 } from "../../../../../../utils";
+import { useMessage } from "../../../../../../hooks/useMessage";
 
 export const useTablePromotionsAdmin = () => {
   const [open, setOpen] = useState(false);
+  const { errorSnackMessage, successSnackMessage } = useMessage();
 
   const handleClickOpenDialog = () => {
     setOpen(true);
@@ -42,18 +44,21 @@ export const useTablePromotionsAdmin = () => {
 
   const fetchPromotionsData = async () => {
     try {
-      if (appStore.auth?.access_token) {
-        setLoading(true);
-        const response = await getPromotionsAdmin(appStore.auth?.access_token);
-        const formatingData = response.data.map((item) => ({
-          ...item,
-          date: item.updated_at.split("T")[0], //"2024-10-16T18:13:59.000000Z"
-        }));
-        console.log(formatingData)
-        setPromotionsData(formatingData);
+      if (!appStore.auth?.access_token) {
+        return null;
       }
+      setLoading(true);
+      const response = await getPromotionsAdmin(appStore.auth?.access_token);
+      const formatingData = response.data.map((item) => ({
+        ...item,
+        date: item.end_date.split("T")[0], //"2024-10-16T18:13:59.000000Z"
+      }));
+      setPromotionsData(formatingData);
+
+      return formatingData;
     } catch (error) {
       console.error("Error fetching Promotions:", error);
+      return error;
     } finally {
       setLoading(false);
       setView("table");
@@ -61,7 +66,6 @@ export const useTablePromotionsAdmin = () => {
   };
 
   const handleAddPromotionsData = async (data: PreDataType) => {
-    
     const setData = {
       description: data?.description as string,
       title: data?.title as string,
@@ -70,8 +74,7 @@ export const useTablePromotionsAdmin = () => {
       start_date: data?.start_date as string,
       img: await fileToBase64(data?.image as File),
     };
-    console.log( 'handleAddPromotionsData',{...setData})
-    
+
     setLoading(true);
     if (!!editData) {
       // UPDATE
@@ -80,19 +83,38 @@ export const useTablePromotionsAdmin = () => {
         id: editData.id,
         ...setData,
       });
+      if (response.error) {
+        console.error("Error updating Promotions:", response.error);
+        errorSnackMessage(response.mensaje);
+        setLoading(false);
+        return;
+      }
+
       if (response) {
         await fetchPromotionsData();
         setEditData(null);
       }
+      successSnackMessage("Promocion actualizada con éxito");
+      setLoading(false);
+      return;
     } else {
       // CREATE
       const response = await addPromotionsAdmin({
         token: appStore.auth?.access_token!,
         ...setData,
       });
+      if (response.error) {
+        errorSnackMessage(response.mensaje);
+
+        setLoading(false);
+        return;
+      }
       if (!response.error) {
         await fetchPromotionsData();
       }
+      successSnackMessage("Promocion actualizada con éxito");
+      setLoading(false);
+      return;
     }
   };
 
@@ -136,14 +158,14 @@ export const useTablePromotionsAdmin = () => {
         newValue: rowData?.end_date ?? "",
       },
     ];
-    console.log("[handleEdit] defaultData", defaultData);
+    // console.log("[handleEdit] defaultData", defaultData);
 
     setEditData({ data: defaultData, id: rowData?.id! });
     setView("form");
   };
 
   const handleDelete = async (id: number) => {
-    console.log("handleDelete", id);
+    // console.log("handleDelete", id);
     handleClickOpenDialog();
     setIdDelete(id);
   };
@@ -154,11 +176,19 @@ export const useTablePromotionsAdmin = () => {
       token: appStore.auth?.access_token!,
       id: id,
     });
+    if (response.error) {
+      console.error("Error al eliminar la promoción:", response.error);
+      errorSnackMessage(response.mensaje);
+      setLoading(false);
+      return;
+    }
     if (response) {
       await fetchPromotionsData();
       handleCloseDialog();
       setIdDelete(null);
+      successSnackMessage("Promocion eliminada con éxito");
     }
+    return response;
   };
   return {
     promotionsData,

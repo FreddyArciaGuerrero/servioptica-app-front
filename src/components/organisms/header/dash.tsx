@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   ButtonAtom,
   ColumnAtom,
@@ -12,6 +12,8 @@ import {
 } from "../../atoms/";
 
 import LogoServioptica from "../../../assets/img/logo_servioptica@2x.webp";
+import HomeIcon from "@mui/icons-material/Home";
+
 import bkDash from "../../../assets/img/bkDash-01.webp";
 import PersonIcon from "@mui/icons-material/Person";
 import { BASE_COLORS } from "../../../style/constants";
@@ -19,11 +21,21 @@ import { useState } from "react";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { appStoreAtom } from "../../../store/Auth";
 import { useAtom } from "jotai";
+import { useLocation } from "react-router-dom";
 
 export const DashHeader = () => {
-  const [, setAppStore] = useAtom(appStoreAtom);
+  const { id: idPedido } = useParams();
+  const location = useLocation();
+  const isDashboardView = location.pathname.includes("/dashboard");
+
+  const [appStore, setAppStore] = useAtom(appStoreAtom);
+
+  const access_token = appStore.auth?.access_token || null;
+  const idAdmin = appStore.auth?.admin || false;
   const navetgate = useNavigate();
-  const [searchValue, setSearchValue] = useState<string | null>(null);
+  const [searchValue, setSearchValue] = useState<string | null>(
+    idPedido || null
+  );
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -65,15 +77,13 @@ export const DashHeader = () => {
             gap={2}
             style={{ minWidth: 300 }}
           >
-            <Link to={"/"}>
-              <img
-                style={{ objectFit: "contain" }}
-                src={LogoServioptica}
-                alt={"Logo Servioptica"}
-                width={215}
-                height={91}
-              />
-            </Link>
+            <img
+              style={{ objectFit: "contain" }}
+              src={LogoServioptica}
+              alt={"Logo Servioptica"}
+              width={215}
+              height={91}
+            />
             <TextAtom
               type="small"
               style={{
@@ -88,19 +98,23 @@ export const DashHeader = () => {
           <ColumnAtom
             flex={9}
             alignItems="flex-end"
-            style={{ color: "var(--mainBtnColor)", minWidth: 300 }}
+            style={{ color: "var(--mainBtnColor)", minWidth: 60 }}
           >
             <RowAtom
-              alignItems="center"
+              alignItems="flex-end"
               gap={2}
-              style={{ width: 280, justifyContent: "center" }}
+              style={{ justifyContent: "flex-end" }}
             >
               <Button
                 id="basic-button"
                 aria-controls={open ? "basic-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
+                onClick={(e) =>
+                  appStore.auth?.access_token
+                    ? handleClick(e)
+                    : navetgate("/login")
+                }
               >
                 <GridAtom
                   p={1}
@@ -125,6 +139,7 @@ export const DashHeader = () => {
                 <MenuItem
                   onClick={() => {
                     setAppStore({ auth: null, user: null });
+                    localStorage.removeItem("appStoreAtom");
                     handleClose();
                   }}
                 >
@@ -156,12 +171,39 @@ export const DashHeader = () => {
             gap={2}
             style={{ width: "100%", maxWidth: 600 }}
           >
+            {!isDashboardView && (
+              <ColumnAtom style={{ flex: "none" }}>
+                <ButtonAtom
+                  onClick={() => {
+                    if (!access_token) return navetgate("/");
+                    if (idAdmin) return navetgate("/dashboard-admin");
+                    return navetgate("/dashboard");
+                  }}
+                  style={{
+                    padding: 0,
+                    minWidth: 40,
+                    height: 40,
+                    maxHeight: 40,
+                    minHeight: 40,
+                    width: 40,
+                    backgroundColor: "#fff",
+                    border: `1px solid ${BASE_COLORS.blue}`,
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <HomeIcon style={{ color: BASE_COLORS.blue, fontSize: 16 }} />
+                </ButtonAtom>
+              </ColumnAtom>
+            )}
             <ColumnAtom flex={10}>
               <InputTextAtom
                 field={{ id: "search_orders", placeholder: "Nº de Pedido" }}
+                defaultValue={idPedido}
                 onChangeCallback={(value) => {
                   setSearchValue(value as string);
-                  console.log(value);
                 }}
               />
             </ColumnAtom>
@@ -169,8 +211,11 @@ export const DashHeader = () => {
               <ButtonAtom
                 disabled={!searchValue}
                 onClick={() => {
-                  navetgate(`/order-tracking/${searchValue}`);
-                  console.log("Buscar");
+                  if (idPedido === searchValue) {
+                    window.location.replace(`/order-tracking/${searchValue}`);
+                  } else {
+                    navetgate(`/order-tracking/${searchValue}`);
+                  }
                 }}
                 style={{ minWidth: 173 }}
               >
